@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+  :root {
+    --bg: 255, 255, 255;
+    --text: 0, 0, 0;
+    --card-hover-bg: 233, 234, 236; /* gray-100 RGB */
+    color-scheme: light;
+  }
+
+  :root.dark {
+    --bg: 0, 0, 0; /* gray-900 RGB */
+    --text: 255, 255, 255;
+    --card-hover-bg: 31, 41, 55; /* gray-800 RGB */
+    color-scheme: dark;
+  }
+
+  @layer base {
+
+  body {
+    background-color: rgb(var(--bg));
+    
+    color: rgb(var(--text));
+    transition: background-color 0.3s, color 0.3s;
+  }
+}
+.card-hover:hover {
+  background-color: rgb(var(--card-hover-bg));
+}
