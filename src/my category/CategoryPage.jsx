@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Products } from "../data/Banana/Products.js";
+import { Products } from "../data/Products.js";
 import {useTheme} from "../context/ThemeContext.jsx"
 import {useState} from "react"
 import SideBar from "./Side.jsx"
@@ -19,6 +19,12 @@ export default function CategoryPage() {
     return p.type === type;
   })
 
+  const uniqeProducts = Array.from(
+    new Map(
+      typeFilter.map(product=>[product.slug, product])
+    ).values()
+  )
+
   function goToProductDetail(slug) {
     navigate(`/product/${slug}`); // Redirect to the product detail page
   }
@@ -31,7 +37,7 @@ export default function CategoryPage() {
     <h1 className="text-center font-bold text-5xl m-5 font-serif text">Order Fresh Agricultural {category} Online</h1>
     <div className="min-h-screen flex gap-6 p-4">                    
       <div className="flex flex-wrap justify-center gap-6 p-5">
-        {typeFilter.map(product => (
+        {uniqeProducts.map(product => (
           <div key={product.id} className={`${theme === "dark" ? "bg-gray-900 hover:bg-gray-800 border-gray-700" : "bg-gray-300 hover:bg-gray-200 border-gray-300"} w-55 h-max-96 flex flex-col border rounded-2xl  items-center justify-between gap-4 transition-transform hover:-translate-y-3 duration-200`}>
             <img src={product.src} alt={product.name} className="w-40 h-30 rounded-lg object-cover m-2"/>
             <h2 className="font-semibold text-lg">{product.name}</h2>

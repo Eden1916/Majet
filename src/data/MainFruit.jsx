@@ -1,7 +1,5 @@
 import PropTypes from "prop-types"
-import Rating from "./Rating.jsx";
 import {useNavigate} from "react-router-dom"
-import AddToCart from "../../components/AddToCart.jsx";
 function MainFruit(props){
     const navigate = useNavigate()
 
@@ -19,7 +17,6 @@ function MainFruit(props){
             <p className="font-bold text-[rgb(var(--text))]" data-price={props.price}>{props.price}br/kg</p>
 
             <button onClick={handleView} className="bg-green-600 w-30 rounded font-bold text-white cursor-pointer">View More</button>
-            <Rating value={props.rating}/>
         </div>
     </main>
     )

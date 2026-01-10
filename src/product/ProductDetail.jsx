@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
-import { Products } from "../data/Banana/Products.js";
+import { Products } from "../data/Products.js";
 import {useTheme} from "../context/ThemeContext.jsx"
 import AddToCart from "../components/AddToCart.jsx";
 import Rating from "../data/Rating.jsx";
