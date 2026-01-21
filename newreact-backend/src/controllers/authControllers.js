@@ -1,0 +1,100 @@
+const user = require("../models/User")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password required" });
+  }
+
+  try {
+    const User = await user.findOne({ email });
+    if (!User) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, User.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    const token = jwt.sign(
+      { id: User._id, email: User.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      message: "Login successful",
+      token,
+      user: {
+        name: User.name,
+        email: User.email
+      }
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+const signup = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  console.log("REQ BODY:", req.body);
+
+  if(!name || !email || !password){
+    return res.status(400).json({message: "Please fill all fields!"});
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!emailRegex.test(email)){
+    return res.status(400).json({message: "Invalid email format!"});
+  }
+
+  if(password.length < 6){
+    return res.status(400).json({message: "Password must be at least 6 charachters long!"});
+  }
+ 
+  try{
+  const userExist = await user.findOne({email})
+
+  if(userExist){
+    return res.status(400).json({message: "User exists in the sysytem!"})
+  }
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  const newUser = new user({
+    name,
+    email,
+    password: hashedPassword,
+  })
+
+  await newUser.save();
+
+  const token = jwt.sign(
+    { id: newUser._id, email: newUser.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+
+  res.status(201).json({
+    message: "User registered successfully!",
+    token,
+    user:{
+      name: newUser.name,
+      email: newUser.email
+    }
+  })}
+catch(error){
+  console.log(error);
+  res.status(500).json({message: "server error"})
+}
+};
+
+module.exports = { signup, login };

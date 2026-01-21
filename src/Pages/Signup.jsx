@@ -7,10 +7,37 @@ function Signup(){
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState("");
     const {theme, toggleTheme} = useTheme()
     const navigate = useNavigate()
+    const API_URL = "http://localhost:5000/api/auth";
+
     const backToLogin = () =>{
         navigate("/Login")
+    }
+
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      setError("");
+
+      try{
+        const res = await fetch(`${API_URL}/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({name, email, password}),
+        })
+        if(!res.ok){
+          const data = await res.json();
+          throw new Error(data.message ||"Signup failed");
+        }
+        const data = await res.json();
+        localStorage.setItem("token", data.token);
+        navigate("/Dashboard");
+      } catch(err){
+        setError(err.message);
+      }
     }
     return(
         <>
@@ -30,7 +57,8 @@ function Signup(){
       ${theme === "dark" ? "translate-x-16" : "translate-x-0"}`}
   />
 </button>
-        <form className={`w-[90%] max-w-[400px] my-10 mx-auto p-3 border rounded-2xl ${theme === "dark" ? "bg-green-500" : "bg-green-400 "}  border-gray-400 box-border`}>
+        <form className={`w-[90%] max-w-[400px] my-10 mx-auto p-3 border rounded-2xl ${theme === "dark" ? "bg-green-500" : "bg-green-400 "}  border-gray-400 box-border`} onSubmit={handleSubmit}>
+          {error && <p className = "text-red-600 block text-center"> {error}</p>}
             <h3 className='text-black text-4xl text-center mb-4 font-bold'>Signup</h3>
         <label className='text-black text-xl font-bold'>Username:</label>
         <input
@@ -67,7 +95,7 @@ function Signup(){
 
         />
         <button className={`block w-full max-w-45 my-5 mx-auto rounded font-bold text-xl cursor-pointer text-white ${theme === "dark" ? "bg-green-700 hover:text-black active:bg-green-600" : "bg-green-600 hover:bg-green-700 active:bg-green-500"}`}>Create Account</button>
-        <a onClick={backToLogin} className="text-center block text-blue-600 cursor-pointer active:text-purple-500 ">Already have an account. Login</a>
+        <p className="text-center block">Already have an account. <a className="text-blue-600 cursor-pointer" href="/login">Login</a></p>
         </form>
         </>
     )

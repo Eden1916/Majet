@@ -6,6 +6,8 @@ import Main from "./components/Main";
 import Footer from "./components/Footer.jsx"
 import Login from "./Pages/Login.jsx"
 import Signup from "./Pages/Signup.jsx"
+import Dashboard from "./Pages/Dashboard.jsx"
+import ProtectedRoute from "./components/ProtectedRoute";
 import CategoryPage from "./my category/CategoryPage.jsx"
 import ProductDetail from "./product/ProductDetail.jsx"
 /*import Vegetable from "./Pages/Vegetable.jsx"
@@ -18,6 +20,8 @@ function App() {
     if (typeof window === "undefined") return "light";
     return localStorage.getItem("theme") ?? "light";
   });
+
+
   
   useEffect(() => {
     const root = document.documentElement;
@@ -63,7 +67,7 @@ function App() {
     <Footer/>
     </footer>
     </>}/>
-
+    <Route path="/Dashboard" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>}/>
     <Route path="/Login" element={<Login theme={theme}/>}/>
     <Route path="/Signup" element={<Signup/>}/>
     <Route path="/category/:category" element={<CategoryPage />} />

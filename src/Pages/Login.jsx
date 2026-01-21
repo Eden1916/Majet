@@ -1,16 +1,28 @@
 import React, {useState} from 'react'
 import { useTheme } from "../context/ThemeContext.jsx";
 import {useNavigate} from "react-router-dom"
+import {login} from "../api/auth.js"
 
 function Login(){
     const {theme, toggleTheme} = useTheme();
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState("");
     const navigate = useNavigate()
 
-    const backToSignup = () =>{
-        navigate("/Signup")
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      setError("");
+
+      try{
+        const data = await login(email, password);
+        localStorage.setItem("token", data.token);
+        navigate("/Dashboard");
+      } catch(err){
+        setError("Invalid email or password");
+      }
     }
+
     return(
         <>
         <button
@@ -29,16 +41,17 @@ function Login(){
       ${theme === "dark" ? "translate-x-16" : "translate-x-0"}`}
   />
 </button>
-        <form className={`w-[90%] max-w-[400px] my-10 mx-auto p-3 border rounded-2xl ${theme === "dark" ? "bg-green-500" : "bg-green-400 "}  border-gray-400 box-border`}>
+        <form className={`w-[90%] max-w-[400px] my-10 mx-auto p-3 border rounded-2xl ${theme === "dark" ? "bg-green-500" : "bg-green-400 "}  border-gray-400 box-border`} onSubmit = {handleSubmit}>
+          {error && <p className="text-red-600 font-bold block text-center">{error}</p>}
             <h3 className={`text-black font-bold text-4xl text-center mb-4`}>Login</h3>
-            <label className=' text-black text-xl font-bold'>Username:</label>
+            <label className=' text-black text-xl font-bold'>Email:</label>
             <input
-            value={name}
+            value={email}
             type="text"
-            id="username"
-            onChange={(e)=>setName(e.target.value)}
-            placeholder="Enter username"
-            autoComplete='current name'
+            id="useremail"
+            onChange={(e)=>setEmail(e.target.value)}
+            placeholder="Enter email"
+            autoComplete='current email'
             className={`w-full p-2 my-2.5 rounded border text-black border-gray-600 ${ theme === "dark" ? "bg-green-400   focus:bg-green-500": " bg-green-300 focus:bg-green-400"} text-xl  box-border`}
             required
             />
@@ -53,8 +66,8 @@ function Login(){
             className={`w-full p-2 my-2.5 rounded border border-gray-600 text-black ${ theme === "dark" ? "bg-green-400 focus:bg-green-500": "bg-green-300 focus:bg-green-400"} text-xl  box-border`}
             required
             />
-            <button type="submit" className={`block w-full max-w-20 my-5 mx-auto rounded font-bold text-xl cursor-pointer text-gray-100 ${theme === "dark" ? "bg-green-700 active:bg-green-600 hover:text-black" : "bg-green-600 hover:bg-green-700 active:bg-green-500"}`}>Login</button>
-            <a onClick={backToSignup} className="block text-center text-blue-600 active:text-purple-600 cursor-pointer">Don't have an account? Sign up</a>
+            <button className={`block w-full max-w-20 my-5 mx-auto rounded font-bold text-xl cursor-pointer text-gray-100 ${theme === "dark" ? "bg-green-700 active:bg-green-600 hover:text-black" : "bg-green-600 hover:bg-green-700 active:bg-green-500"}`}>Login</button>
+            <p className="block text-center">Don't have an account? <a className="text-blue-600 cursor-pointer" href="/signup">Signup</a></p>
         </form>
         </>
     )
