@@ -70,7 +70,7 @@ function App() {
     <Route path="/Dashboard" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>}/>
     <Route path="/Login" element={<Login theme={theme}/>}/>
     <Route path="/Signup" element={<Signup/>}/>
-    <Route path="/category/:category" element={<CategoryPage />} />
+    <Route path="/category" element={<ProtectedRoute><CategoryPage /></ProtectedRoute>} />
     <Route path="/product/:slug" element={<ProductDetail />} />
     <Route /*path="/Fruit" element={<Fruit/>}*//>
     <Route /*path="/BananaPage" element={<BananaPage*//>

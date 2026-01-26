@@ -17,7 +17,7 @@ function Login(){
       try{
         const data = await login(email, password);
         localStorage.setItem("token", data.token);
-        navigate("/Dashboard");
+        navigate("/category");
       } catch(err){
         setError("Invalid email or password");
       }

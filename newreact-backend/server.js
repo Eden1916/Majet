@@ -1,6 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-const authRoute = require("./src/routers/authRouters");
+const authRoute = require("./src/routes/authRoutes");
+const categoryRoute = require("./src/routes/categorys");
+
 const cors = require("cors");
 //const mongoose = require("mongoose");
 const connectDB = require("./config/db.js");
@@ -19,6 +21,8 @@ app.get("/", (req, res)=>{
 app.use(express.json())
 
 app.use('/api/auth', authRoute)
+app.use('/api/categorys', categoryRoute)
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{
     console.log(`Server is runing on port ${PORT}`)
