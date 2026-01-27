@@ -61,28 +61,48 @@ import {useNavigate} from "react-router-dom"
 
 
 const CategoryPage = () =>{
-const [categories, setCategorys] = useState([]);
+const [categories, setCategories] = useState([]);
+const [loading, setLoading] = useState(true);
 const{theme} = useTheme();
 const navigate = useNavigate();
 
-useEffect(()=>{
-    fetch("http://localhost:5000/api/categorys", {
-      headers:{
-        Authorization:"Brearer " + localStorage.getItem("token"),
+useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:5000/api/categorys", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.status === 401) {
+        localStorage.removeItem("token");
+        navigate("/login");
+        return;
       }
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        setCategorys(data.categories);
-    })
-    .catch(err=>{
-        console.error(err);
-    })
+
+      const data = await res.json();
+      setCategories(Array.isArray(data) ? data : data.categories);
+    } catch (err) {
+      console.error(err);
+    }finally {
+      setLoading(false);
+    }
+  };
+
+  fetchCategories();
 }, []);
+
 
 const logout = () => {
   localStorage.removeItem("token");
   navigate("/login");
+}
+
+if (loading) {
+  return <p className="text-center mt-10">Loading categories...</p>;
 }
 return(
     <>

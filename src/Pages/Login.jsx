@@ -16,8 +16,17 @@ function Login(){
 
       try{
         const data = await login(email, password);
-        localStorage.setItem("token", data.token);
-        navigate("/category");
+
+if (!data?.token) {
+  throw new Error("No token received");
+}
+
+localStorage.setItem("token", data.token);
+
+setTimeout(() => {
+  navigate("/category");
+}, 0);
+
       } catch(err){
         setError("Invalid email or password");
       }
