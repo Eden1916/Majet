@@ -1,7 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const authRoute = require("./src/routes/authRoutes");
-const categoryRoute = require("./src/routes/categorys");
+const categoryRoute = require("./src/routes/categoryRoutes");
+const productGroupRoute = require("./src/routes/productGroupRoutes")
+
 
 const cors = require("cors");
 //const mongoose = require("mongoose");
@@ -21,7 +23,8 @@ app.get("/", (req, res)=>{
 app.use(express.json())
 
 app.use('/api/auth', authRoute)
-app.use('/api/categorys', categoryRoute)
+app.use('/api/categories', categoryRoute)
+app.use("/api/product-groups", productGroupRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, ()=>{

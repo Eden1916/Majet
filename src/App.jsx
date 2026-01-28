@@ -10,6 +10,7 @@ import Dashboard from "./Pages/Dashboard.jsx"
 import ProtectedRoute from "./components/ProtectedRoute";
 import CategoryPage from "./my category/CategoryPage.jsx"
 import ProductDetail from "./product/ProductDetail.jsx"
+import ProductGroup from "./my category/ProductGroups.jsx";
 /*import Vegetable from "./Pages/Vegetable.jsx"
 import Grain from "./Pages/Grain.jsx"
 */
@@ -70,6 +71,7 @@ function App() {
     <Route path="/Dashboard" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>}/>
     <Route path="/Login" element={<Login theme={theme}/>}/>
     <Route path="/Signup" element={<Signup/>}/>
+    <Route path="/product-groups/:categoryId" element={<ProtectedRoute><ProductGroup /></ProtectedRoute>} />
     <Route path="/category" element={<ProtectedRoute><CategoryPage /></ProtectedRoute>} />
     <Route path="/product/:slug" element={<ProductDetail />} />
     <Route /*path="/Fruit" element={<Fruit/>}*//>
