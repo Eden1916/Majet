@@ -4,7 +4,6 @@ import fruit from "../../assets/fruit.png"
 import grain from "../../assets/grains.png"
 import About from "./About.jsx"
 import MainDescription from "./mainDescription.jsx"
-import category from "../../my category/CategoryPage.jsx"
 import Product from "./product.jsx"
 import { useNavigate } from "react-router-dom";
 function Main({refs}){

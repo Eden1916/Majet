@@ -6,14 +6,11 @@ import Main from "./components/Main";
 import Footer from "./components/Footer.jsx"
 import Login from "./Pages/Login.jsx"
 import Signup from "./Pages/Signup.jsx"
-import Dashboard from "./Pages/Dashboard.jsx"
 import ProtectedRoute from "./components/ProtectedRoute";
-import CategoryPage from "./my category/CategoryPage.jsx"
-import ProductDetail from "./product/ProductDetail.jsx"
-import ProductGroup from "./my category/ProductGroups.jsx";
-/*import Vegetable from "./Pages/Vegetable.jsx"
-import Grain from "./Pages/Grain.jsx"
-*/
+import CategoryPage from "./Pages/CategoryPage.jsx"
+import ProductDetail from "./Pages/ProductDetail.jsx"
+import ProductGroup from "./Pages/ProductGroups.jsx";
+
 import ScrollToTop from "./components/Scrollto.jsx";
 
 function App() {
@@ -68,16 +65,12 @@ function App() {
     <Footer/>
     </footer>
     </>}/>
-    <Route path="/Dashboard" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>}/>
     <Route path="/Login" element={<Login theme={theme}/>}/>
     <Route path="/Signup" element={<Signup/>}/>
-    <Route path="/product-groups/:categoryId" element={<ProtectedRoute><ProductGroup /></ProtectedRoute>} />
     <Route path="/category" element={<ProtectedRoute><CategoryPage /></ProtectedRoute>} />
-    <Route path="/product/:slug" element={<ProductDetail />} />
-    <Route /*path="/Fruit" element={<Fruit/>}*//>
-    <Route /*path="/BananaPage" element={<BananaPage*//>
-    <Route /*path="/Vegetable" element={<Vegetable/>}*//>
-    <Route /*path="/Grain" element={<Grain/>}*//>
+    <Route path="/product-groups/:categoryId" element={<ProtectedRoute><ProductGroup /></ProtectedRoute>} />
+    <Route path="/product-details/:id" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
+    
     </Routes>
     </Router>
     
