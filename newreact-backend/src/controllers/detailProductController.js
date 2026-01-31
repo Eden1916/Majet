@@ -1,20 +1,19 @@
 const DetailProduct = require("../models/detailProduct");
+const mongoose = require("mongoose");
+
 
 const getProductDetail = async(req, res)=>{
             try{
-                const {product_groupId, type} = req.query;
+                const { groupId  } = req.params;
+
+                if (!groupId ) {
+                    return res.status(400).json({ message: "groupId is required" });
+                  }
+
+                const products = await DetailProduct.find({product_group: groupId  }).populate("product_group");
+
         
-                if(product_groupId){
-                    filter.product_group = product_groupId;
-                }
-        
-                if(type){
-                    filter.type = type;
-                }
-        
-                const ProductDetails = await DetailProduct.find();
-        
-                res.json(ProductDetails)
+                res.json(products)
             }catch(error){
                 console.error(error);
                 res.status(500).json({message: "Server error"});

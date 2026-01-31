@@ -69,7 +69,7 @@ function App() {
     <Route path="/Signup" element={<Signup/>}/>
     <Route path="/category" element={<ProtectedRoute><CategoryPage /></ProtectedRoute>} />
     <Route path="/product-groups/:categoryId" element={<ProtectedRoute><ProductGroup /></ProtectedRoute>} />
-    <Route path="/product-details/:id" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
+    <Route path="/product-details/:product_group" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
     
     </Routes>
     </Router>

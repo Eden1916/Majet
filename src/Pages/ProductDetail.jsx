@@ -11,14 +11,14 @@ function ProductDetail(){
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const {theme} = useTheme();
-  const {id} = useParams();
+  const {product_group} = useParams();
 
   useEffect(()=>{
-    getProductDetail(id)
+    getProductDetail(product_group)
     .then(data=>{setProducts(data)})
     .catch(console.error)
     .finally(()=>setLoading(false));
-  }, [id]);
+  }, [product_group]);
 
   if(loading){
     return <p>loading product details...</p>

@@ -22,6 +22,11 @@ const detailProductSchema = new mongoose.Schema({
         required:true,
         default:0
     },
+    category:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Category",
+        required:true
+    },
     product_group:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"ProductGroup",

@@ -1,22 +1,24 @@
 const productGroup = require("../models/productGroup");
+const DetailProduct = require("../models/detailProduct");
 
 const getProductGroups = async(req, res) =>{
     try{
-        const {categoryId, type} = req.query;
+        const {categoryId} = req.params;
 
-        let filter = {isActive:true}
+        const products = await DetailProduct.find({ category: categoryId });
+const uniqueNames = [...new Set(products.map(p => p.name))]; // unique product names
 
-        if(categoryId){
-            filter.category = categoryId;
-        }
+res.json(uniqueNames.map(name => {
+    const product = products.find(p => p.name === name);
+    return {
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        type: product.type,
+        product_group: product.product_group
+    };
+}));
 
-        if(type){
-            filter.type = type;
-        }
-
-        const productGroups = await productGroup.find()//filter).populate("category", "name");
-
-        res.json(productGroups)
     }catch(error){
         console.error(error);
         res.status(500).json({message: "Server error"});
