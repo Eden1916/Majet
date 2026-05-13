@@ -1,6 +1,6 @@
 export const categorys = async() => {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/api/categories", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
         headers:{
             Authorization: `Bearer ${token}`,
         },
