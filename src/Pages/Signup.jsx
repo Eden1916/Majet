@@ -34,7 +34,26 @@ function Signup(){
         }
         const data = await res.json();
         localStorage.setItem("token", data.token);
-        navigate("/Dashboard");
+
+        const intendedCategory = localStorage.getItem("intendedCategory");
+        localStorage.removeItem("intendedCategory");
+
+        if(intendedCategory){
+          const catRes = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
+            headers: { Authorization: "Bearer " + data.token }
+          });
+          const categories = await catRes.json();
+          console.log("intendedCategory:", intendedCategory);
+          console.log("categories from DB:", categories.map(c => c.name));
+          const match = categories.find(c => c.name.toLowerCase() === intendedCategory.toLowerCase());
+          console.log("match:", match);
+          if(match){
+            navigate(`/product-groups/${match._id}`);
+            return;
+          }
+        }
+
+        navigate("/category");
       } catch(err){
         setError(err.message);
       }

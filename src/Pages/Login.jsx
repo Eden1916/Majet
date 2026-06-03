@@ -23,6 +23,21 @@ if (!data?.token) {
 
 localStorage.setItem("token", data.token);
 
+const intendedCategory = localStorage.getItem("intendedCategory");
+localStorage.removeItem("intendedCategory");
+
+if(intendedCategory){
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
+    headers: { Authorization: "Bearer " + data.token }
+  });
+  const categories = await res.json();
+  const match = categories.find(c => c.name.toLowerCase() === intendedCategory.toLowerCase());
+  if(match){
+    navigate(`/product-groups/${match._id}`);
+    return;
+  }
+}
+
 setTimeout(() => {
   navigate("/category");
 }, 0);

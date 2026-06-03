@@ -11,12 +11,11 @@ const connectDB = require("./config/db.js");
 const app = express();
 connectDB();
 app.use(cors());
-  
+app.use(express.json());
+
 app.get("/", (req, res)=>{
     res.send("Hello from backend")
-
 })
-app.use(express.json())
 
 app.use('/api/auth', authRoute)
 app.use('/api/categories', categoryRoute)
