@@ -4,13 +4,13 @@ const mongoose = require("mongoose");
 
 const getProductDetail = async(req, res)=>{
             try{
-                const { groupId  } = req.params;
+                const { product_group } = req.params;
 
-                if (!groupId ) {
-                    return res.status(400).json({ message: "groupId is required" });
+                if (!product_group) {
+                    return res.status(400).json({ message: "product_group is required" });
                   }
 
-                const products = await DetailProduct.find({product_group: groupId  }).populate("product_group");
+                const products = await DetailProduct.find({ product_group }).populate("product_group");
 
         
                 res.json(products)

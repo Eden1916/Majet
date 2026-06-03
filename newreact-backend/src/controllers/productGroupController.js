@@ -5,19 +5,15 @@ const getProductGroups = async(req, res) =>{
     try{
         const {categoryId} = req.params;
 
-        const products = await DetailProduct.find({ category: categoryId });
-const uniqueNames = [...new Set(products.map(p => p.name))]; // unique product names
+        const groups = await productGroup.find({ category: categoryId });
 
-res.json(uniqueNames.map(name => {
-    const product = products.find(p => p.name === name);
-    return {
-        name: product.name,
-        image: product.image,
-        price: product.price,
-        type: product.type,
-        product_group: product.product_group
-    };
-}));
+        res.json(groups.map(group => ({
+            _id: group._id,
+            name: group.name,
+            image: group.image,
+            type: group.type,
+            product_group: group._id
+        })));
 
     }catch(error){
         console.error(error);

@@ -100,11 +100,15 @@ npm run dev
 ![Home Page](screenshot/home.png)
 
 #Category Page
-![Category Page](screenshot/category1.png)
-![Category Page](screenshote/category2.png)
-
+![Category Page](screenshot/category.png)
+#Product Group Page
+![Product Group Page](screenshote/productGroup1.png)
+![Product Group Page](screenshote/productGroup2.png
+![Product Group Page](screenshote/productGroup3.png)
+![Product Group Page](screenshote/productGroup4.png)
+![Product Group Page](screenshote/productGroup5.png))
 #Detail Page
-![Detail Page](screenshot/details.png)
+![Detail Page](screenshot/detail.png)
 
 🧠 Learning Outcomes
 

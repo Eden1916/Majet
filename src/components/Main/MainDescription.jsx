@@ -3,8 +3,13 @@ import {useNavigate} from "react-router-dom"
 function MainDescription(){
     const navigate = useNavigate();
 
-    function shop(){
-        navigate("/signup");
+    async function shop() {
+        const token = localStorage.getItem("token");
+        if(!token){
+            navigate("/login");
+            return;
+        }
+        navigate("/category");
     }
 return(
     <div>
